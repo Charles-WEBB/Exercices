@@ -1,0 +1,65 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-image: url('https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_960_720.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.avatar::before,
+.avatar::after {
+  --scale: 0;
+  --arrow_size: 10px;
+  --tooltip_color: blue;
+
+  position: absolute;
+  top: -0.25em;
+  left: 50%;
+
+  transform: translateX(-50%) translateY(var(--translate-y, 0))
+    scale(var(--scale));
+  transform-origin: bottom center;
+  transition: 0.3s transform;
+}
+
+.avatar::before {
+  --translate-y: calc(-100% - var(--arrow_size));
+  background-color: var(--tooltip_color);
+  content: attr(data-tooltip);
+  color: white;
+  padding: 0.5em;
+  width: max-content;
+  max-width: 100%;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.avatar:hover::before,
+.avatar:hover::after {
+  --scale: 1;
+}
+
+.avatar::after {
+  --translate-y: calc(-1 * var(--arrow_size));
+  content: '';
+  height: 10px;
+  border: var(--arrow_size) solid transparent;
+  border-top-color: var(--tooltip_color);
+  transform-origin: top center;
+}
